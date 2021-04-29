@@ -1,0 +1,17 @@
+#Sunucuya disk ekleme islemleri hyper ve üzerinden yapilip su komutlar calistirilmistir
+
+dmesg | grep sdb
+fdisk /dev/sdb
+p
+n
+e
+1
+t
+L
+83
+
+mkfs –t ext2 /dev/sdb
+fsck /dev/sdb –f –y
+mkdir /mnt/bootcamp
+
+mount –t ext2 /dev/sdb /mnt/bootcamp

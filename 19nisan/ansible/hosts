@@ -1,0 +1,7 @@
+[ubuntu]
+app01 ansible_host=192.168.135.111
+
+
+
+# [control]
+# control ansible_connection=local

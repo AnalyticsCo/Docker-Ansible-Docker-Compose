@@ -1,0 +1,36 @@
+---
+    - hosts: all
+      become: true
+      tasks: 
+         - name: Configuring Docker Repository
+           yum_repository:
+             name: Docker
+             description: "Docker Repo"
+             baseurl: "https://download.docker.com/linux/centos/docker-ce.repo" 
+             gpgcheck: no
+           register: x
+
+         - name: Checking Configuration Status
+           debug:
+             var: x.failed
+
+         - name: Installing Docker
+           package:
+             name: "docker-ce-18.06.3.ce-3.el7.x86_64"
+             state: present
+           register: y
+
+         - name: Checking Install Status
+           debug:
+             var: y.failed
+
+         - name: Starting Docker Daemon
+           service:
+             name: docker
+             state: started
+             enabled: yes
+           when: y.failed == false
+
+         - name: Install
+           command: "pip install docker-py" 
+    
